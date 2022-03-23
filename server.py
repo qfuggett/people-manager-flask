@@ -14,7 +14,6 @@ app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 def homepage():
 
     users = crud.get_users()
-    print(users)
 
     if request.method == 'POST':
         name = request.form.get('name')
@@ -23,16 +22,24 @@ def homepage():
         zip_code = request.form.get('zip_code')
 
         user = crud.create_user(name, email, birthday, zip_code)
-        print("********************************", "USER:",
-              user, "*******************************")
+        print("*********************", "USER:", user, "********************")
 
         return redirect('/')
 
     return render_template('homepage.html', users=users)
 
 
-@app.route('/update_table')
-def update_table():
+@app.route('/edit/<user_id>', methods=["GET", "POST"])
+def edit_user(user_id):
+
+    return redirect('/')
+
+
+@app.route('/delete/<user_id>', methods=["GET", "POST"])
+def delete_user(user_id):
+
+    crud.delete_user(user_id)
+    print("****************", "USER DELETED", "****************")
 
     return redirect('/')
 
