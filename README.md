@@ -1,7 +1,7 @@
-## Flask People Manager
+# Flask People Manager
 A Python-Flask application that performs CRUD actions by allowing a user to add, edit and delete information from a table.<br />
 
-## Installation
+# Installation
 After cloning from github, in your terminal, run virtualenv for separate installations of packages for this project:
 `virtualenv env`
 `source env/bin/activate`
@@ -11,24 +11,24 @@ Start the server with `python3 server.py`
 
 Begin adding, editing and deleting users!
 
-## References
-# Jinja
+# References
+## Jinja
 https://jinja.palletsprojects.com/en/3.0.x/
 
-# Flask
+## Flask
 https://pythonise.com/series/learning-flask/flask-http-methods
 https://flask.palletsprojects.com/en/2.0.x/testing/
 
-# SQLAlchemy
+## SQLAlchemy
 https://overiq.com/sqlalchemy-101/crud-using-sqlalchemy-orm/
 
-# Python
+## Python
 https://docs.python.org/3/
 
-## Contributing
+# Contributing
 Bug reports and pull requests are welcome on Github at https://github.com/qfuggett/people-manager-flask.git. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
 
-## License
+# License
 Copyright 2022 QueenTesa Fuggett
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
