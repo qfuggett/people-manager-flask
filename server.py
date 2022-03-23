@@ -1,11 +1,9 @@
-from flask import (Flask, render_template, request,
-                   flash, session, jsonify, redirect)
+from flask import (Flask, render_template, request, redirect)
 from jinja2 import StrictUndefined
 from model import connect_to_db
 import crud
 
 app = Flask(__name__)
-app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
