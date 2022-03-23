@@ -29,10 +29,23 @@ def homepage():
     return render_template('homepage.html', users=users)
 
 
-@app.route('/edit/<user_id>', methods=["GET", "POST"])
-def edit_user(user_id):
+@app.route('/update/<user_id>', methods=["GET", "POST"])
+def update_user(user_id):
 
-    return redirect('/')
+    user = crud.get_user_by_id(user_id)
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        birthday = request.form.get('birthday')
+        zip_code = request.form.get('zip_code')
+
+        new_user = crud.update_user(user_id, name, email, birthday, zip_code)
+        print("****************", "USER UPDATED", new_user, "****************")
+
+        return redirect('/')
+
+    return render_template('update.html', user=user)
 
 
 @app.route('/delete/<user_id>', methods=["GET", "POST"])
