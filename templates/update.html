@@ -3,13 +3,18 @@
 
 {% block body %}
 <div>
-    <h2>Welcome to People Manager</h2>
-    <form action="/update/{{user.user_id}}" method="POST">
-        <input type="text" id="name" name="name" placeholder="{{user.name}}" value="{{user.name}}">
-        <input type="text" id="email" name="email" placeholder="{{user.email}}" value="{{user.email}}">
-        <input type="date" id="birthday" name="birthday" placeholder="{{user.birthday}}" value="{{user.birthday}}">
-        <input type="number" id="zip_code" name="zip_code" placeholder="{{user.zip_code}}" value="{{user.zip_code}}">
-        <button type="submit">Save</button>
-    </form>   
+    <div>
+        <h2>Welcome to People Manager</h2>
+        <form action="/update/{{user.user_id}}" method="POST">
+            <input type="text" id="name" name="name" placeholder="{{user.name}}" value="{{user.name}}">
+            <input type="text" id="email" name="email" placeholder="{{user.email}}" value="{{user.email}}">
+            <input type="date" id="birthday" name="birthday" placeholder="{{user.birthday}}" value="{{user.birthday}}">
+            <input type="number" id="zip_code" name="zip_code" placeholder="{{user.zip_code}}" value="{{user.zip_code}}">
+            <button type="submit">Save</button>
+        </form> 
+    </div> 
+    <div>
+        <a href="/">Go Back</a>
+    </div>
 </div>
 {% endblock %}
