@@ -23,6 +23,21 @@ def get_user_by_id(user_id):
     return User.query.filter(User.user_id == user_id).first()
 
 
+def update_user(user_id, name, email, birthday, zip_code):
+    """Updates a user by id"""
+
+    user = get_user_by_id(user_id)
+    user.name = name
+    user.email = email
+    user.birthday = birthday
+    user.zip_code = zip_code
+
+    db.session.add(user)
+    db.session.commit()
+
+    return user
+
+
 def delete_user(user_id):
     """Deletes a user by id"""
 
