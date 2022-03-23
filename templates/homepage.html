@@ -2,35 +2,32 @@
 {% block title %}People Manager{% endblock %}
 
 {% block body %}
-  <h2>Welcome to People Manager</h2>
+<div>
+    <h2>Welcome to People Manager</h2>
+      <div>
+          <table>
+            {% for user in users %}
+                <tr>
+                    <td>{{user.user_id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.birthday}}</td>
+                    <td>{{user.zip_code}}</td>
+                    <td><button>edit</button></td>
+                <td><button>delete</button></td>
+                </tr>
+            {% endfor %}
+        </table>
+      </div>
+      <div>
+          <form action="/" method="POST">
+              <input type="text" id="name" name="name" placeholder="Name">
+              <input type="text" id="email" name="email" placeholder="Email">
+              <input type="date" id="birthday" name="birthday" placeholder="Birthday">
+              <input type="number" id="zip_code" name="zip_code" placeholder="Zip Code">
+              <button type="submit">Save</button>
+          </form>
 
-  <table>
-  <tr>
-    <th>No.</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Birthday</th>
-    <th>Zip Code</th>
-    <th></th>
-    <th></th>
-  </tr>
-  <tr>
-    <td>0</td>
-    <td>test</td>
-    <td>test</td>
-    <td>test</td>
-    <td>00000</td>
-    <td><button>edit</button></td>
-    <td><button>delete</button></td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>test</td>
-    <td>test</td>
-    <td>test</td>
-    <td>00000</td>
-    <td><button>edit</button></td>
-    <td><button>delete</button></td>
-  </tr>
-</table>
+      </div>
+</div>
 {% endblock %}
