@@ -11,6 +11,20 @@ Start the server with `python3 server.py`
 
 Begin adding, editing and deleting users!
 
+## References
+# Jinja
+https://jinja.palletsprojects.com/en/3.0.x/
+
+# Flask
+https://pythonise.com/series/learning-flask/flask-http-methods
+https://flask.palletsprojects.com/en/2.0.x/testing/
+
+# SQLAlchemy
+https://overiq.com/sqlalchemy-101/crud-using-sqlalchemy-orm/
+
+# Python
+https://docs.python.org/3/
+
 ## Contributing
 Bug reports and pull requests are welcome on Github at https://github.com/qfuggett/people-manager-flask.git. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
 
