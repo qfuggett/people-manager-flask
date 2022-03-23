@@ -10,61 +10,31 @@ app.jinja_env.undefined = StrictUndefined
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def homepage():
 
-    return render_template('homepage.html')
-
-
-@app.route('/allusers')
-def all_users():
-
     users = crud.get_users()
-    users_dict = {}
-
-    i = 0
-    for user in users:
-        dict_user = {}
-        dict_user['user_id'] = user.user_id
-        dict_user['name'] = user.name
-        dict_user['email'] = user.email
-        dict_user['birthday'] = user.birthday
-        dict_user['zip_code'] = user.zip_code
-        users_dict[i] = dict_user
-        i += 1
-
-        print(dict_user)
-
-    return jsonify(users_dict)
-
-
-@app.route('/user', methods=["GET", "POST"])
-def user():
+    print(users)
 
     if request.method == 'POST':
-        name = request.json.get('name')
-        email = request.json.get('email')
-        birthday = request.json.get('birthday')
-        zip_code = request.json.get('zip_code')
+        name = request.form.get('name')
+        email = request.form.get('email')
+        birthday = request.form.get('birthday')
+        zip_code = request.form.get('zip_code')
 
         user = crud.create_user(name, email, birthday, zip_code)
         print("********************************", "USER:",
               user, "*******************************")
 
-    return "test"
+        return redirect('/')
+
+    return render_template('homepage.html', users=users)
 
 
-@app.route('/user/<user_id>', methods=["PATCH", "DELETE"])
-def handleUser(user_id):
+@app.route('/update_table')
+def update_table():
 
-    if request.method == 'DELETE':
-        user_id = request.json.get('user_id')
-        crud.delete_user(user_id)
-
-        print("********************************",
-              "USER DELETED", "*******************************")
-
-    return "user deleted"
+    return redirect('/')
 
 
 if __name__ == '__main__':
