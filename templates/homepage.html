@@ -5,12 +5,21 @@
 <div>
     <h2 style="text-align: center; padding: 10px">Welcome to People Manager</h2>
     <div style="padding: 10px">
-          <form action="/" method="POST" style="text-align: center;">
-              <input type="text" id="name" name="name" placeholder="Name">
-              <input type="text" id="email" name="email" placeholder="Email">
-              <input type="date" id="birthday" name="birthday" placeholder="Birthday">
-              <input type="number" id="zip_code" name="zip_code" placeholder="Zip Code">
-              <button type="submit">Save</button>
+        {% for field, errors in form.errors.items() %}
+          <small class="form-text text-muted ">
+              {{ ', '.join(errors) }}
+          </small>
+        {% endfor %}
+          <form class="form-horizontal" action="/" method="POST" style="text-align: center;" >
+                {{ form.hidden_tag() }}
+            <div class="form-row">
+                {{ form.csrf_token }}
+                <div class="form-group">{{ form.name(class="form-control") }}</div>
+                <div class="form-group">{{ form.email(class="form-control") }}</div>
+                <div class="form-group">{{ form.birthday(class="form-control") }}</div>
+                <div class="form-group">{{ form.zip_code(class="form-control") }}</div>
+                <div class="form-group">{{ form.save }}</div>
+            </div>
           </form>
       </div>
       <div class="w-75 mx-auto">
@@ -39,8 +48,9 @@
                     </td>
                 </tr>
             {% endfor %}
-        </table>
-      </div>
+            </table>
+        </div>
+    </div>
       
 </div>
 {% endblock %}

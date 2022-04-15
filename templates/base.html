@@ -12,7 +12,13 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    {% block body %}{% endblock %}
+    {% block body %}
+      {% for field, errors in form.errors.items() %}
+          <small class="form-text text-muted ">
+            {{ ', '.join(errors) }}
+          </small>
+        {% endfor %}
+      {% endblock %}
 
     {% block after_body %}{% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>

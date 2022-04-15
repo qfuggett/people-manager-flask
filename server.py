@@ -1,16 +1,46 @@
 from flask import (Flask, render_template, request, redirect)
 from jinja2 import StrictUndefined
 from model import connect_to_db
+from flask_wtf import FlaskForm
+from wtforms import StringField, DateField, IntegerField, SubmitField, validators
+from wtforms.validators import ValidationError, DataRequired, Length
 import crud
+import os
+import datetime
+from flask_wtf.csrf import CSRFProtect
+
 
 app = Flask(__name__)
+csrf = CSRFProtect(app)
 app.jinja_env.undefined = StrictUndefined
-app.jinja_env.add_extension('jinja2.ext.loopcontrols')
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
+
+
+class UserForm(FlaskForm):
+    name = StringField(label=('Name'), validators=[
+                       DataRequired(), Length(min=3, max=25)], render_kw={"placeholder": "Name"})
+    email = StringField(label=('Email'), validators=[
+                        DataRequired(), Length(min=3, max=25)], render_kw={"placeholder": "Email"})
+    birthday = DateField(label=('Birthday'), validators=[DataRequired()])
+    zip_code = IntegerField(label=('Zip Code'), validators=[
+                            DataRequired(), Length(min=5)], render_kw={"placeholder": "Zip Code"})
+    save = SubmitField(label=('Save'))
+
+    def validate_date(self, birthday):
+        if self.birthday.data >= datetime.date.today():
+            raise ValidationError(
+                f"{birthday} cannot be today or in the future!")
+
+    def validate_email(self, email):
+        if "@" not in self.email.data:
+            raise ValidationError(
+                f"{email} is not valid")
 
 
 @app.route('/', methods=["GET", "POST"])
 def homepage():
-
+    user_form = UserForm()
     users = crud.get_users()
 
     if request.method == 'POST':
@@ -24,7 +54,10 @@ def homepage():
 
         return redirect('/')
 
-    return render_template('homepage.html', users=users)
+    if user_form.validate_on_submit():
+        return f'''<h1>{user_form.name.data} added! </h1>'''
+
+    return render_template('homepage.html', users=users, form=user_form)
 
 
 @app.route('/update/<user_id>', methods=["GET", "POST"])
