@@ -2,8 +2,8 @@ from flask import (Flask, render_template, request, redirect)
 from jinja2 import StrictUndefined
 from model import connect_to_db
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, IntegerField, SubmitField, validators
-from wtforms.validators import ValidationError, DataRequired, Length
+from wtforms import StringField, DateField, SubmitField, validators
+from wtforms.validators import ValidationError, DataRequired, Length, Regexp
 import crud
 import os
 import datetime
@@ -18,32 +18,32 @@ app.config['SECRET_KEY'] = SECRET_KEY
 
 
 class UserForm(FlaskForm):
-    name = StringField(label=('Name'), validators=[
-                       DataRequired(), Length(min=3, max=25)], render_kw={"placeholder": "Name"})
-    email = StringField(label=('Email'), validators=[
-                        DataRequired(), Length(min=3, max=25)], render_kw={"placeholder": "Email"})
-    birthday = DateField(label=('Birthday'), validators=[DataRequired()])
-    zip_code = IntegerField(label=('Zip Code'), validators=[
-                            DataRequired(), Length(min=5)], render_kw={"placeholder": "Zip Code"})
+    name = StringField('Name', [validators.DataRequired(), validators.Length(
+        min=3, max=25)], render_kw={"placeholder": "Name"})
+    email = StringField('Email', [validators.DataRequired(), validators.Length(
+        min=3, max=25)], render_kw={"placeholder": "Email"})
+    birthday = DateField('Birthday', [validators.DataRequired()])
+    zip_code = StringField('Zip Code', [validators.DataRequired(), validators.Length(min=5, max=5), Regexp(
+        regex='\d', message="You must only use numbers")], render_kw={"placeholder": "Zip Code"})
     save = SubmitField(label=('Save'))
 
     def validate_date(self, birthday):
         if self.birthday.data >= datetime.date.today():
             raise ValidationError(
-                f"{birthday} cannot be today or in the future!")
+                f"Your birthday cannot be today or in the future!")
 
     def validate_email(self, email):
         if "@" not in self.email.data:
             raise ValidationError(
-                f"{email} is not valid")
+                f"You must input a full email address")
 
 
-@app.route('/', methods=["GET", "POST"])
+@ app.route('/', methods=["GET", "POST"])
 def homepage():
     user_form = UserForm()
     users = crud.get_users()
 
-    if request.method == 'POST':
+    if request.method == 'POST' and user_form.validate():
         name = request.form.get('name')
         email = request.form.get('email')
         birthday = request.form.get('birthday')
@@ -54,13 +54,10 @@ def homepage():
 
         return redirect('/')
 
-    if user_form.validate_on_submit():
-        return f'''<h1>{user_form.name.data} added! </h1>'''
-
     return render_template('homepage.html', users=users, form=user_form)
 
 
-@app.route('/update/<user_id>', methods=["GET", "POST"])
+@ app.route('/update/<user_id>', methods=["GET", "POST"])
 def update_user(user_id):
 
     user = crud.get_user_by_id(user_id)
@@ -79,7 +76,7 @@ def update_user(user_id):
     return render_template('update.html', user=user)
 
 
-@app.route('/delete/<user_id>', methods=["GET", "POST"])
+@ app.route('/delete/<user_id>', methods=["GET", "POST"])
 def delete_user(user_id):
 
     crud.delete_user(user_id)
