@@ -7,6 +7,9 @@ After cloning from github, in your terminal, run virtualenv for separate install
 `source env/bin/activate`
 `pip3 install -r requirements.txt`
 
+Run the seeds file to load the database with:
+`python3 seeds.py`
+
 Start the server with `python3 server.py`
 
 Begin adding, editing and deleting users!
