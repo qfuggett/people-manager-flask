@@ -5,19 +5,23 @@
 <div>
     <h2 style="text-align: center; padding: 10px">Welcome to People Manager</h2>
     <div style="padding: 10px">
-        {% for field, errors in form.errors.items() %}
-          <small class="form-text text-muted ">
-              {{ ', '.join(errors) }}
-          </small>
-        {% endfor %}
+        {% if form.errors %}
+            <ul class="errors">
+                {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <li>{{ form[field_name].label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        {% endif %}
           <form class="form-horizontal" action="/" method="POST" style="text-align: center;" >
                 {{ form.hidden_tag() }}
             <div class="form-row">
                 {{ form.csrf_token }}
-                <div class="form-group">{{ form.name(class="form-control") }}</div>
-                <div class="form-group">{{ form.email(class="form-control") }}</div>
-                <div class="form-group">{{ form.birthday(class="form-control") }}</div>
-                <div class="form-group">{{ form.zip_code(class="form-control") }}</div>
+                <div class="form-group">{{ form.name }}</div>
+                <div class="form-group">{{ form.email }}</div>
+                <div class="form-group">{{ form.birthday.label }} {{ form.birthday }}</div>
+                <div class="form-group">{{ form.zip_code }}</div>
                 <div class="form-group">{{ form.save }}</div>
             </div>
           </form>
