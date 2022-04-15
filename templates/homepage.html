@@ -28,7 +28,7 @@
             </thead>
             {% for user in users %}
                 <tr>
-                    <td>{{user.user_id}}</td>
+                    <td>{{loop.index}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.birthday}}</td>
